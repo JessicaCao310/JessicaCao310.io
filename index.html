@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A journey through the history of chocolate — from the ancient cacao groves of Mesoamerica to the craft bars of today." />
+  <title>A History of Chocolate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Skip link for keyboard users -->
+  <a class="skip-link" href="#origins">Skip to content</a>
+
+  <!-- Reusable cute critter sprites (hidden; referenced via <use>) -->
+  <svg class="sprite" aria-hidden="true" width="0" height="0" focusable="false">
+    <symbol id="c-bear" viewBox="0 0 60 60">
+      <circle cx="18" cy="16" r="8" fill="#b07d52"/><circle cx="42" cy="16" r="8" fill="#b07d52"/>
+      <circle cx="18" cy="16" r="3.6" fill="#f7a8c4"/><circle cx="42" cy="16" r="3.6" fill="#f7a8c4"/>
+      <circle cx="30" cy="32" r="20" fill="#bd885b"/>
+      <ellipse cx="30" cy="38" rx="9" ry="7" fill="#f4e6d0"/>
+      <circle cx="30" cy="34" r="2.4" fill="#3a2417"/>
+      <circle cx="22" cy="28" r="2.6" fill="#3a2417"/><circle cx="38" cy="28" r="2.6" fill="#3a2417"/>
+      <ellipse cx="17" cy="36" rx="4" ry="2.6" fill="#f48fb1" opacity=".6"/>
+      <ellipse cx="43" cy="36" rx="4" ry="2.6" fill="#f48fb1" opacity=".6"/>
+    </symbol>
+    <symbol id="c-bunny" viewBox="0 0 60 60">
+      <ellipse cx="22" cy="14" rx="5" ry="13" fill="#fff" stroke="#f0c3d4" stroke-width="1.6"/>
+      <ellipse cx="38" cy="14" rx="5" ry="13" fill="#fff" stroke="#f0c3d4" stroke-width="1.6"/>
+      <ellipse cx="22" cy="15" rx="2" ry="8" fill="#ffc4da"/><ellipse cx="38" cy="15" rx="2" ry="8" fill="#ffc4da"/>
+      <circle cx="30" cy="36" r="18" fill="#fff" stroke="#f0c3d4" stroke-width="1.6"/>
+      <circle cx="23" cy="33" r="2.6" fill="#4a3128"/><circle cx="37" cy="33" r="2.6" fill="#4a3128"/>
+      <path d="M27 40h6l-3 3z" fill="#f48fb1"/>
+      <ellipse cx="17" cy="40" rx="4" ry="2.6" fill="#f48fb1" opacity=".55"/>
+      <ellipse cx="43" cy="40" rx="4" ry="2.6" fill="#f48fb1" opacity=".55"/>
+    </symbol>
+    <symbol id="c-cat" viewBox="0 0 60 60">
+      <path d="M16 26l2-14 13 8z" fill="#e9d2ac"/><path d="M44 26l-2-14-13 8z" fill="#e9d2ac"/>
+      <path d="M21 22l1-7 6 4z" fill="#ffc4da"/><path d="M39 22l-1-7-6 4z" fill="#ffc4da"/>
+      <circle cx="30" cy="34" r="18" fill="#efdcba"/>
+      <path d="M20 32q3-4 6 0" stroke="#4a3128" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <path d="M34 32q3-4 6 0" stroke="#4a3128" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <path d="M27 39h6l-3 3z" fill="#f48fb1"/>
+      <path d="M14 34h9M14 38l9-1M46 34h-9M46 38l-9-1" stroke="#cbb488" stroke-width="1.4" stroke-linecap="round"/>
+      <ellipse cx="18" cy="39" rx="4" ry="2.6" fill="#f48fb1" opacity=".5"/>
+      <ellipse cx="42" cy="39" rx="4" ry="2.6" fill="#f48fb1" opacity=".5"/>
+    </symbol>
+    <symbol id="c-choco" viewBox="0 0 40 40">
+      <rect x="7" y="9" width="26" height="22" rx="4" fill="#5a3a22" stroke="#3a2417" stroke-width="2"/>
+      <line x1="20" y1="9" x2="20" y2="31" stroke="#3a2417" stroke-width="2"/>
+      <line x1="7" y1="20" x2="33" y2="20" stroke="#3a2417" stroke-width="2"/>
+    </symbol>
+    <symbol id="c-heart" viewBox="0 0 40 40">
+      <path d="M20 33C8 24 6 16 12 12c4-3 8 0 8 3 0-3 4-6 8-3 6 4 4 12-8 21z" fill="#f48fb1"/>
+    </symbol>
+  </svg>
+
+  <!-- Sticky navigation -->
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary">
+      <a class="nav__brand" href="#top">🍫 Chocolate</a>
+      <button class="nav__toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__menu" id="nav-menu">
+        <li><a href="#origins">Origins</a></li>
+        <li><a href="#mesoamerica">Maya &amp; Aztec</a></li>
+        <li><a href="#europe">Europe</a></li>
+        <li><a href="#industrial">Industrial Era</a></li>
+        <li><a href="#modern">Modern Era</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="top">
+    <svg class="critter critter--float" style="top:16%;left:5%" aria-hidden="true"><use href="#c-bear"/></svg>
+    <svg class="critter critter--float" style="top:22%;right:6%;animation-delay:.8s" aria-hidden="true"><use href="#c-heart"/></svg>
+    <svg class="critter critter--float" style="bottom:12%;left:9%;width:40px;animation-delay:1.4s" aria-hidden="true"><use href="#c-choco"/></svg>
+    <div class="hero__inner">
+      <p class="hero__eyebrow">Theobroma cacao &mdash; "food of the gods"</p>
+      <h1 class="hero__title">A History of Chocolate</h1>
+      <p class="hero__subtitle">
+        From sacred Mesoamerican drink to the bars we love today &mdash;
+        four thousand years of one remarkable bean.
+      </p>
+      <a class="hero__cta" href="#origins">Begin the journey</a>
+    </div>
+    <a class="hero__scroll" href="#origins" aria-label="Scroll down">▾</a>
+  </section>
+
+  <main>
+    <div class="timeline-intro reveal">
+      <h2>Four thousand years, one bean</h2>
+      <p>Follow cacao's journey from sacred Mesoamerican ritual to the bars in our pockets.</p>
+      <span class="ornament" aria-hidden="true">✦ ✦ ✦</span>
+    </div>
+
+    <ol class="timeline">
+      <!-- scattered critters along the timeline edges -->
+      <svg class="critter critter--float" style="top:60px;left:0;width:56px" aria-hidden="true"><use href="#c-bunny"/></svg>
+      <svg class="critter critter--float" style="top:34%;right:-4px;width:56px;animation-delay:1s" aria-hidden="true"><use href="#c-cat"/></svg>
+      <svg class="critter critter--float" style="top:62%;left:-2px;width:52px;animation-delay:.5s" aria-hidden="true"><use href="#c-bear"/></svg>
+      <svg class="critter critter--float" style="bottom:40px;right:2px;width:38px;animation-delay:1.6s" aria-hidden="true"><use href="#c-heart"/></svg>
+
+      <!-- Origins -->
+      <li class="era reveal" id="origins">
+        <div class="era__marker" aria-hidden="true"></div>
+        <div class="era__card">
+          <p class="era__date">c. 1900 BC</p>
+          <h2 class="era__title">Origins in Mesoamerica</h2>
+          <p>
+            The story of chocolate begins with the <em>Theobroma cacao</em> tree,
+            native to the tropical rainforests of Central and South America.
+            Archaeological traces of cacao residue on ancient pottery show that
+            people in the region were preparing cacao drinks more than 3,000 years
+            ago &mdash; long before chocolate was ever sweet.
+          </p>
+          <p>
+            Early cultures such as the Olmec are believed to be among the first to
+            harvest cacao, roasting and grinding the beans into a bitter, frothy
+            beverage that laid the groundwork for everything that followed.
+          </p>
+        </div>
+      </li>
+
+      <!-- Maya & Aztec -->
+      <li class="era reveal" id="mesoamerica">
+        <div class="era__marker" aria-hidden="true"></div>
+        <div class="era__card">
+          <p class="era__date">250 &ndash; 1500 AD</p>
+          <h2 class="era__title">Sacred Drink of the Maya &amp; Aztec</h2>
+          <p>
+            For the Maya, cacao was a gift of the gods, woven into rituals,
+            weddings, and daily life. They drank it as a spiced, unsweetened
+            beverage &mdash; often flavored with chili, vanilla, or cornmeal and
+            poured between vessels to raise a prized layer of foam.
+          </p>
+          <p>
+            The Aztec treasured cacao so highly that its beans were used as
+            <strong>currency</strong>: a handful could buy food, cloth, or labor.
+            Reserved largely for nobility, priests, and warriors, chocolate was
+            wealth you could drink.
+          </p>
+        </div>
+      </li>
+
+      <!-- Europe -->
+      <li class="era reveal" id="europe">
+        <div class="era__marker" aria-hidden="true"></div>
+        <div class="era__card">
+          <p class="era__date">1500s &ndash; 1700s</p>
+          <h2 class="era__title">Chocolate Crosses to Europe</h2>
+          <p>
+            When Spanish explorers encountered cacao in the 16th century, they
+            carried it back across the Atlantic. Europeans found the bitter drink
+            strange &mdash; until they began adding <strong>sugar</strong>, honey,
+            and cinnamon, transforming it into a sweet, fashionable luxury.
+          </p>
+          <p>
+            Through the 1600s, chocolate houses spread from the Spanish court to
+            France, England, and beyond. Still a drink, and still expensive, it
+            became a symbol of status and sophistication among Europe's elite.
+          </p>
+        </div>
+      </li>
+
+      <!-- Industrial -->
+      <li class="era reveal" id="industrial">
+        <div class="era__marker" aria-hidden="true"></div>
+        <div class="era__card">
+          <p class="era__date">1800s</p>
+          <h2 class="era__title">The Industrial Revolution</h2>
+          <p>
+            The 19th century turned chocolate from a drink into the solid treat we
+            know. In 1828, Coenraad van Houten's <strong>cocoa press</strong>
+            separated cocoa butter from the bean, producing smooth cocoa powder and
+            making chocolate cheaper and easier to work with.
+          </p>
+          <p>
+            Soon after, makers like Fry, Cadbury, Nestlé, and Lindt pushed the
+            craft forward &mdash; the first molded eating bars, the invention of
+            <strong>milk chocolate</strong> (1875), and conching for a melt-in-the-mouth
+            texture. Chocolate became affordable to the many, not just the few.
+          </p>
+        </div>
+      </li>
+
+      <!-- Modern -->
+      <li class="era reveal" id="modern">
+        <div class="era__marker" aria-hidden="true"></div>
+        <div class="era__card">
+          <p class="era__date">1900s &ndash; Today</p>
+          <h2 class="era__title">The Modern Era</h2>
+          <p>
+            The 20th century brought mass production, global brands, and chocolate
+            in every corner shop. Today the pendulum is swinging back toward quality:
+            <strong>bean-to-bar</strong> makers celebrate single-origin flavors the
+            way winemakers celebrate terroir.
+          </p>
+          <p>
+            Alongside the craft revival comes a reckoning &mdash; growing attention
+            to <strong>fair trade</strong>, farmer livelihoods, and sustainable
+            farming. The next chapter of chocolate's story is about enjoying it more
+            thoughtfully.
+          </p>
+        </div>
+      </li>
+    </ol>
+
+    <!-- Did you know -->
+    <section class="facts" aria-labelledby="facts-title">
+      <svg class="critter critter--float" style="top:34px;left:5%;width:52px" aria-hidden="true"><use href="#c-cat"/></svg>
+      <svg class="critter critter--float" style="bottom:40px;right:6%;width:56px;animation-delay:1s" aria-hidden="true"><use href="#c-bunny"/></svg>
+      <h2 class="facts__title" id="facts-title">Did You Know?</h2>
+      <p class="facts__lead reveal">A few sweet morsels of cacao trivia</p>
+      <ul class="facts__grid">
+        <li class="fact reveal">
+          <span class="fact__num">1</span>
+          <p>The word "chocolate" likely derives from the Nahuatl <em>xocolatl</em>.</p>
+        </li>
+        <li class="fact reveal">
+          <span class="fact__num">2</span>
+          <p>Aztecs used cacao beans as money &mdash; you could buy a turkey for about 100 beans.</p>
+        </li>
+        <li class="fact reveal">
+          <span class="fact__num">3</span>
+          <p>It takes roughly a full year's harvest from one cacao tree to make about half a kilo of chocolate.</p>
+        </li>
+        <li class="fact reveal">
+          <span class="fact__num">4</span>
+          <p>Milk chocolate wasn't invented until 1875 &mdash; chocolate spent most of its history as a drink.</p>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <svg class="critter critter--float" style="top:-26px;left:8%;width:48px" aria-hidden="true"><use href="#c-bear"/></svg>
+    <div class="site-footer__inner">
+      <p>
+        Built with curiosity and cocoa. Historical details drawn from general
+        public-history sources such as the Smithsonian and Wikipedia; dates are
+        approximate.
+      </p>
+      <a class="site-footer__top" href="#top">↑ Back to top</a>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
