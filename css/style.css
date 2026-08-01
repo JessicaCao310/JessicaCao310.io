@@ -438,71 +438,24 @@ p { margin: 0 0 1rem; }
 }
 .fact p { margin: 0; color: rgba(247, 239, 226, 0.85); }
 
-/* ---- Meme strip ---- */
-.memes {
-  padding: 5rem 1.5rem;
-  text-align: center;
-  background: radial-gradient(80% 90% at 50% 0%, var(--blush), transparent 70%);
-}
-.memes__title {
-  font-size: clamp(1.9rem, 4.5vw, 2.8rem);
-  color: var(--cocoa-800);
-  margin: 0 0 0.4rem;
-}
-.memes__lead { color: var(--cocoa-500); margin: 0; }
-.memes__grid {
-  max-width: var(--maxw);
-  margin: 2.6rem auto 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.6rem;
-}
-.meme { margin: 0; }
-.meme__frame {
-  position: relative;
-  aspect-ratio: 1 / 1;
-  display: grid;
-  place-items: center;
-  border-radius: 16px;
-  overflow: hidden;
-  background: linear-gradient(160deg, #f7d9b2, #e9b988);
-  border: 3px solid var(--cocoa-900);
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
-}
-.meme__frame:hover { transform: translateY(-5px) rotate(-1deg); box-shadow: var(--shadow); }
-.meme__art { width: 78%; height: auto; }
-.meme__text {
+/* ---- Scattered word-tags (simple decorative phrases) ---- */
+.wordtag {
   position: absolute;
-  left: 0;
-  right: 0;
-  padding: 0 10px;
-  font-family: Impact, "Arial Black", "Haettenschweiler", sans-serif;
-  font-weight: 900;
-  text-transform: uppercase;
-  color: #fff;
-  letter-spacing: 0.02em;
-  line-height: 1.02;
-  -webkit-text-stroke: 2px #1a1008;
-  paint-order: stroke fill;
-  text-shadow: 2px 2px 0 #1a1008;
-  font-size: clamp(0.95rem, 2.6vw, 1.18rem);
+  z-index: 3;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(0.8rem, 1.4vw, 1rem);
+  color: var(--caramel);
+  opacity: 0.9;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: rotate(-4deg);
 }
-.meme__text--top { top: 10px; }
-.meme__text--bottom { bottom: 12px; }
-
-/* gif-like looping animations */
-.m-anim { transform-box: fill-box; transform-origin: center; }
-.m-bounce { animation: m-bounce 1.3s ease-in-out infinite; }
-.m-shake  { animation: m-shake 0.9s ease-in-out infinite; }
-.m-wiggle { animation: m-wiggle 1.4s ease-in-out infinite; }
-.m-steam  { transform-box: fill-box; transform-origin: center; animation: m-steam 1.6s ease-in-out infinite alternate; }
-.m-twinkle { transform-box: fill-box; transform-origin: center; animation: m-twinkle 1.4s ease-in-out infinite; }
-@keyframes m-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
-@keyframes m-shake  { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
-@keyframes m-wiggle { 0%, 100% { transform: rotate(-3deg) scale(1); } 50% { transform: rotate(3deg) scale(1.05); } }
-@keyframes m-steam  { 0% { opacity: 0.15; transform: translateY(5px); } 100% { opacity: 0.75; transform: translateY(-5px); } }
-@keyframes m-twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.7); } 50% { opacity: 1; transform: scale(1.2); } }
+.wordtag--light { color: var(--gold); opacity: 0.8; }
+.wordtag--pink { color: var(--pink-deep); }
+.wordtag::before { content: "C"; }
+.wordtag::after  { content: "D"; }
 
 /* ---- Footer ---- */
 .site-footer {
@@ -578,6 +531,8 @@ p { margin: 0 0 1rem; }
   /* keep decorative critters from crowding the single-column layout */
   .critter { width: 42px !important; height: 42px; }
   .timeline > .critter { display: none; }
+  .timeline > .wordtag { display: none; }
+  .wordtag { font-size: 0.78rem; }
 
   /* smaller, subtler relics on phones */
   .relic--vessel, .relic--pod { display: none; }
