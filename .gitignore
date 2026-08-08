@@ -2,3 +2,7 @@
 .agents/
 .claude/
 skills-lock.json
+
+# Firebase local cache and logs (not the project link in .firebaserc)
+.firebase/
+firebase-debug.log
