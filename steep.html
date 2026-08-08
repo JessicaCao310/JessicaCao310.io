@@ -1,0 +1,356 @@
+<title>Steep — a loose-leaf tea timer</title>
+<style>
+  :root {
+    --ground: #F6F3EC;
+    --card: #FFFFFF;
+    --ink: #2A2620;
+    --ink-soft: #6B6154;
+    --line: #E4DDCF;
+    --accent: #5B7B5A;
+    --accent-soft: #E7EDE4;
+    --amber: #C08A3E;
+    --ring-track: #E9E2D4;
+    --shadow: 0 1px 2px rgba(42,38,32,.05), 0 12px 32px -12px rgba(42,38,32,.18);
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #181510;
+      --card: #221E18;
+      --ink: #EDE7DA;
+      --ink-soft: #A79C8A;
+      --line: #35302708;
+      --line: #35302A;
+      --accent: #8DAE86;
+      --accent-soft: #2A2F26;
+      --amber: #D6A254;
+      --ring-track: #322C23;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 16px 40px -16px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #F6F3EC; --card: #FFFFFF; --ink: #2A2620; --ink-soft: #6B6154;
+    --line: #E4DDCF; --accent: #5B7B5A; --accent-soft: #E7EDE4; --amber: #C08A3E;
+    --ring-track: #E9E2D4; --shadow: 0 1px 2px rgba(42,38,32,.05), 0 12px 32px -12px rgba(42,38,32,.18);
+  }
+  :root[data-theme="dark"] {
+    --ground: #181510; --card: #221E18; --ink: #EDE7DA; --ink-soft: #A79C8A;
+    --line: #35302A; --accent: #8DAE86; --accent-soft: #2A2F26; --amber: #D6A254;
+    --ring-track: #322C23; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 16px 40px -16px rgba(0,0,0,.6);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 440px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    padding: 32px 30px 30px;
+  }
+
+  header { text-align: center; margin-bottom: 22px; }
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0 0 6px;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 30px;
+    letter-spacing: -.01em;
+    margin: 0;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 26px;
+  }
+  .chip {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: color .18s, border-color .18s, background .18s;
+  }
+  .chip:hover { color: var(--ink); border-color: var(--accent); }
+  .chip[aria-pressed="true"] {
+    color: var(--accent);
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    font-weight: 500;
+  }
+  .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .dial { position: relative; width: 240px; height: 240px; margin: 0 auto 6px; }
+  .dial svg { transform: rotate(-90deg); display: block; }
+  .dial .track { stroke: var(--ring-track); }
+  .dial .progress {
+    stroke: var(--accent);
+    stroke-linecap: round;
+    transition: stroke-dashoffset .3s linear, stroke .3s;
+  }
+  body.brewing .dial .progress { stroke: var(--amber); }
+
+  .readout {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+  }
+  .time {
+    font-family: var(--serif);
+    font-size: 52px;
+    font-weight: 600;
+    letter-spacing: .01em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+  .phase {
+    font-size: 12px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  body.brewing .phase { color: var(--amber); }
+  body.done .phase { color: var(--accent); }
+
+  .meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 22px 0;
+  }
+  .meta div { background: var(--card); padding: 12px 8px; text-align: center; }
+  .meta dt {
+    font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--ink-soft); margin: 0 0 4px;
+  }
+  .meta dd {
+    margin: 0; font-family: var(--serif); font-size: 17px; font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .controls { display: flex; gap: 10px; }
+  button.act {
+    flex: 1;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 13px;
+    border-radius: 11px;
+    cursor: pointer;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink);
+    transition: background .18s, border-color .18s, opacity .18s;
+  }
+  button.act:hover { border-color: var(--accent); }
+  button.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    flex: 2;
+  }
+  button.primary:hover { opacity: .9; }
+  button.act:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .note {
+    margin: 16px 0 0;
+    text-align: center;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    min-height: 1.5em;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dial .progress, .chip, button.act { transition: none; }
+  }
+</style>
+
+<main class="card">
+  <header>
+    <p class="eyebrow">Loose-leaf timer</p>
+    <h1>Steep</h1>
+  </header>
+
+  <div class="chips" role="group" aria-label="Choose a tea"></div>
+
+  <div class="dial">
+    <svg width="240" height="240" viewBox="0 0 240 240" aria-hidden="true">
+      <circle class="track" cx="120" cy="120" r="108" fill="none" stroke-width="10"></circle>
+      <circle class="progress" cx="120" cy="120" r="108" fill="none" stroke-width="10"></circle>
+    </svg>
+    <div class="readout">
+      <div class="time" id="time" aria-live="off">2:00</div>
+      <div class="phase" id="phase">ready</div>
+    </div>
+  </div>
+
+  <dl class="meta">
+    <div><dt>Water</dt><dd id="tempC">80°C</dd></div>
+    <div><dt>Fahrenheit</dt><dd id="tempF">175°F</dd></div>
+    <div><dt>Leaf</dt><dd id="ratio">2 g</dd></div>
+  </dl>
+
+  <div class="controls">
+    <button class="act primary" id="startBtn">Start</button>
+    <button class="act" id="resetBtn">Reset</button>
+  </div>
+
+  <p class="note" id="note" aria-live="polite">Whole-leaf green — a light, grassy first steep.</p>
+</main>
+
+<script>
+  const TEAS = [
+    { name: "Green",  sec: 120, c: 80,  f: 175, g: 2, note: "Whole-leaf green — a light, grassy first steep." },
+    { name: "White",  sec: 180, c: 85,  f: 185, g: 2, note: "Silver needle — gentle water, patient time." },
+    { name: "Oolong", sec: 180, c: 90,  f: 195, g: 3, note: "Semi-oxidized — good for three or four re-steeps." },
+    { name: "Black",  sec: 240, c: 95,  f: 205, g: 2, note: "Full oxidation — near-boiling for a brisk cup." },
+    { name: "Herbal", sec: 300, c: 100, f: 212, g: 3, note: "Tisane — a rolling boil and a long, full draw." },
+    { name: "Matcha", sec: 60,  c: 70,  f: 160, g: 2, note: "Whisk, don't steep — cooler water keeps it sweet." },
+  ];
+
+  const R = 108, CIRC = 2 * Math.PI * R;
+  const progress = document.querySelector(".progress");
+  progress.style.strokeDasharray = CIRC;
+  progress.style.strokeDashoffset = 0;
+
+  const $ = id => document.getElementById(id);
+  const chipsWrap = document.querySelector(".chips");
+  const timeEl = $("time"), phaseEl = $("phase"), noteEl = $("note");
+  const startBtn = $("startBtn");
+
+  let current = TEAS[0], remaining = current.sec, total = current.sec;
+  let ticking = false, raf = null, endAt = 0;
+
+  TEAS.forEach((t, i) => {
+    const b = document.createElement("button");
+    b.className = "chip";
+    b.type = "button";
+    b.textContent = t.name;
+    b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
+    b.addEventListener("click", () => selectTea(t, b));
+    chipsWrap.appendChild(b);
+  });
+
+  function fmt(s) {
+    s = Math.max(0, Math.ceil(s));
+    return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+  }
+  function render() {
+    timeEl.textContent = fmt(remaining);
+    progress.style.strokeDashoffset = CIRC * (1 - remaining / total);
+  }
+  function setPhase(p) { phaseEl.textContent = p; }
+
+  function selectTea(t, btn) {
+    stop();
+    current = t; total = t.sec; remaining = t.sec;
+    document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", "false"));
+    btn.setAttribute("aria-pressed", "true");
+    $("tempC").textContent = t.c + "°C";
+    $("tempF").textContent = t.f + "°F";
+    $("ratio").textContent = t.g + " g";
+    noteEl.textContent = t.note;
+    document.body.classList.remove("done", "brewing");
+    setPhase("ready");
+    startBtn.textContent = "Start";
+    render();
+  }
+
+  function loop() {
+    remaining = (endAt - performance.now()) / 1000;
+    if (remaining <= 0) { remaining = 0; render(); finish(); return; }
+    render();
+    raf = requestAnimationFrame(loop);
+  }
+  function start() {
+    if (ticking) return;
+    if (remaining <= 0) remaining = total;
+    ticking = true;
+    document.body.classList.remove("done");
+    document.body.classList.add("brewing");
+    setPhase("brewing");
+    startBtn.textContent = "Pause";
+    endAt = performance.now() + remaining * 1000;
+    raf = requestAnimationFrame(loop);
+  }
+  function pause() {
+    ticking = false;
+    cancelAnimationFrame(raf);
+    document.body.classList.remove("brewing");
+    setPhase("paused");
+    startBtn.textContent = "Resume";
+  }
+  function stop() {
+    ticking = false;
+    cancelAnimationFrame(raf);
+    document.body.classList.remove("brewing", "done");
+  }
+  function finish() {
+    ticking = false;
+    cancelAnimationFrame(raf);
+    document.body.classList.remove("brewing");
+    document.body.classList.add("done");
+    setPhase("ready — pour");
+    startBtn.textContent = "Start";
+    noteEl.textContent = "Your " + current.name.toLowerCase() + " is ready. Pour and enjoy.";
+    chime();
+  }
+
+  let audioCtx;
+  function chime() {
+    try {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      [0, 0.18, 0.36].forEach((t, i) => {
+        const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+        o.type = "sine";
+        o.frequency.value = [660, 880, 990][i];
+        o.connect(g); g.connect(audioCtx.destination);
+        const at = audioCtx.currentTime + t;
+        g.gain.setValueAtTime(0, at);
+        g.gain.linearRampToValueAtTime(0.14, at + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, at + 0.5);
+        o.start(at); o.stop(at + 0.5);
+      });
+    } catch (e) {}
+  }
+
+  startBtn.addEventListener("click", () => ticking ? pause() : start());
+  $("resetBtn").addEventListener("click", () => selectTea(current, document.querySelector('.chip[aria-pressed="true"]')));
+
+  render();
+</script>
